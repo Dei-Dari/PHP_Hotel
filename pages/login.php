@@ -2,12 +2,12 @@
 if (isset($_SESSION['ruser']))
 {
 	echo '<form action="index.php';
-	if (isset($_GET['page'])) echo '?page='.$_GET['page'];
+	if (isset($_GET['page'])&& $_GET['page']!=3) echo '?page='.$_GET['page'];
 	echo '" class="form-inline pull-right" method="post">';
 	echo '<h4>Hello, <span>'.$_SESSION['ruser'].'</span>&nbsp;';
 	echo '<input type="submit" value="Logout" id="ex" name="ex" class="btn btn-default btn-xs"></h4>';
 	echo '</form>';
-	if (isset($_POST['ex'])) 
+	if (isset($_POST['ex']))
 	{
 		unset($_SESSION['ruser']);
 		unset($_SESSION['radmin']);
@@ -16,7 +16,7 @@ if (isset($_SESSION['ruser']))
 }
 else
 {
-	if (isset($_POST['press'])) 
+	if (isset($_POST['press']))
 	{
 		if(login($_POST['login'],$_POST['pass']))
 		{

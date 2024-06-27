@@ -6,10 +6,20 @@ echo '<form action="index.php?page=1" method="post">';
 echo '<select name="countryid" class="col-sm-3 col-md-3 col-lg-3">';
 
 $res = mysqli_query($mysql, "SELECT * FROM countries ORDER BY country");
-echo '<option value="0">Select country...</option>';
-while ($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
-    echo '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+if (isset($_POST['selcountry'])){
+    echo '<option value="'. $_POST['countryid'] . '"></option>';
+    var_dump(mysqli_fetch_array($res, MYSQLI_NUM));
+    while ($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
+        echo '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+    }
 }
+else{
+    echo '<option value="0">Select country...</option>';
+    while ($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
+        echo '<option value="' . $row[0] . '">' . $row[1] . '</option>';
+    }
+}
+
 mysqli_free_result($res);
 echo '<input type="submit" name="selcountry" value="Select Country"
 	class="btn btn-xs btn-primary">';
@@ -18,6 +28,7 @@ echo '</select>';
 if (isset($_POST['selcountry'])) {
     echo '<br/>';
     $countryid = $_POST['countryid'];
+    echo $countryid;
     if ($countryid == 0)
         exit();
     $result = mysqli_query(
@@ -34,6 +45,7 @@ if (isset($_POST['selcountry'])) {
     echo '<input type="submit" name="selcity" value="&nbsp;&nbsp;Select&nbsp;&nbsp;&nbsp;City&nbsp;&nbsp;"
 		class="btn btn-xs btn-primary">';
 }
+
 
 echo '</form>';
 if (isset($_POST['selcity'])) {
